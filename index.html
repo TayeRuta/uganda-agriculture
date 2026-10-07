@@ -1,0 +1,482 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Uganda Agriculture Synthesis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&display=swap">
+<style>
+/* Layout: single 1080px report column — masthead, KPI strip, then numbered findings, each = headline + chart panel + takeaway */
+:root{
+  --bg:#f3f5f1; --panel:#ffffff; --ink:#132019; --ink-2:#4b5a51; --muted:#7a877f; --rule:#dfe4dd; --grid:#eceee9;
+  --accent:#16825a; --wet:#2b6c9e; --wet-deep:#1b4a70; --dry:#c4572e; --dry-deep:#8d3416; --neutral:#ecebe6;
+  --mam:#16825a; --son:#8a63d2; --band:#eef3ec; --chip:#e8eee6;
+  --f-display:"Noto Sans JP",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Noto Sans JP",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Noto Sans JP",ui-sans-serif,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1411; --panel:#161d19; --ink:#eaf0eb; --ink-2:#b2beb6; --muted:#859189; --rule:#27302b; --grid:#1f2723;
+  --accent:#3fae82; --wet:#4a8cc4; --wet-deep:#8cc0ec; --dry:#d9693f; --dry-deep:#f0a283; --neutral:#2a302c;
+  --mam:#2e9e74; --son:#9277e6; --band:#1a241f; --chip:#1d2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1411; --panel:#161d19; --ink:#eaf0eb; --ink-2:#b2beb6; --muted:#859189; --rule:#27302b; --grid:#1f2723;
+  --accent:#3fae82; --wet:#4a8cc4; --wet-deep:#8cc0ec; --dry:#d9693f; --dry-deep:#f0a283; --neutral:#2a302c;
+  --mam:#2e9e74; --son:#9277e6; --band:#1a241f; --chip:#1d2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:0 64px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.015em}
+p{margin:0}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* masthead */
+.mast{padding-block:48px 28px;display:grid;gap:18px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;gap:14px;flex-wrap:wrap}
+.eyebrow span+span{color:var(--muted)}
+.mast h1{font-size:clamp(36px,6.2vw,68px);line-height:1.02;font-weight:800;max-width:15ch}
+.mast h1 em{font-style:normal;color:var(--accent)}
+.dek{font-size:clamp(17px,2vw,20px);color:var(--ink-2);max-width:62ch;line-height:1.5}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-block:28px 8px;border-top:2px solid var(--ink)}
+.kpi{padding:18px 18px 4px 0;display:grid;gap:6px;align-content:start}
+.kpi+.kpi{padding-left:18px;border-left:1px solid var(--rule)}
+.kpi .v{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,3.6vw,42px);line-height:1;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:.45em;font-weight:500;color:var(--ink-2);margin-left:3px}
+.kpi .l{font-size:14px;color:var(--ink-2);line-height:1.4}
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--chip);color:var(--ink-2);max-width:100%;white-space:normal;line-height:1.3}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--muted);display:inline-block}
+.tag.dry i{background:var(--dry)} .tag.wet i{background:var(--wet)}
+
+/* summary */
+.summary{margin-block:36px 12px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.summary h2{font-size:14px;font-family:var(--f-mono);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:4px}
+.summary ol{margin:0;padding:0;list-style:none;display:grid;gap:14px;counter-reset:k}
+.summary li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;font-size:17px;line-height:1.5}
+.summary li::before{counter-increment:k;content:counter(k);font-family:var(--f-mono);font-size:13px;color:var(--accent);padding-top:3px}
+.summary b{font-weight:600}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin-block:28px 8px}
+nav.toc a{font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 12px;border:1px solid var(--rule);border-radius:99px;background:var(--panel)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--ink);outline:none}
+
+/* sections */
+section.f{padding-block:56px 8px;display:grid;gap:18px;scroll-margin-top:16px}
+.f-head{display:grid;gap:10px;max-width:760px}
+.f-num{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.f-head h2{font-size:clamp(24px,3.2vw,34px);line-height:1.15;font-weight:700}
+.f-head p{color:var(--ink-2);font-size:16.5px;max-width:66ch}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:20px 20px 14px;min-width:0}
+.panel-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 24px;flex-wrap:wrap;margin-bottom:6px}
+.panel-title{font-weight:600;font-size:15px}
+.panel-sub{font-size:13px;color:var(--muted)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.sw.line{height:3px;border-radius:2px;width:18px}
+.sw.dash{height:0;border-top:2px dashed var(--ink-2);width:18px;border-radius:0}
+.chart{width:100%;position:relative}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.note{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;font-size:15px;color:var(--ink-2);max-width:760px;padding:14px 16px;border-radius:10px;background:var(--band)}
+.note b{color:var(--ink);font-weight:600}
+.note .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:3px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+
+/* svg text */
+svg{display:block;overflow:visible}
+svg text{font-family:var(--f-body);fill:var(--muted);font-size:11.5px}
+svg .tick text{font-family:var(--f-mono);font-size:11px}
+svg .tick line{stroke:var(--grid)}
+svg .domain{display:none}
+svg .ann,svg .ann-strong{paint-order:stroke;stroke:var(--panel);stroke-width:4px;stroke-linejoin:round}
+svg .ann{fill:var(--ink-2);font-size:12px;font-weight:500}
+svg .ann-strong{fill:var(--ink);font-size:12.5px;font-weight:600}
+svg .lab{font-weight:600;font-size:12.5px}
+
+/* table */
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule)}
+th{font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+td.r,th.r{text-align:right}
+tr.hi td{font-weight:600}
+.sev{display:inline-block;height:8px;border-radius:4px;background:var(--dry);vertical-align:middle}
+
+/* limits */
+.limits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.limits h3{font-size:18px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.limits ul{margin:0;padding-left:18px;display:grid;gap:8px;color:var(--ink-2);font-size:15px}
+.next{border-left:3px solid var(--accent);padding:4px 0 4px 18px;max-width:760px;font-size:17px}
+.next b{font-family:var(--f-display)}
+
+details{margin-top:8px}
+summary{cursor:pointer;font-weight:600;font-size:15px;padding:10px 0}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:grid;gap:8px;max-width:820px}
+
+/* tooltip */
+#tip{position:fixed;pointer-events:none;z-index:20;background:var(--ink);color:var(--bg);padding:9px 12px;border-radius:8px;font-size:13px;line-height:1.45;min-width:120px;box-shadow:0 6px 24px rgba(0,0,0,.18);opacity:0;transition:opacity .12s}
+#tip .t{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+#tip .row{display:flex;justify-content:space-between;gap:16px}
+#tip .row b{font-family:var(--f-mono);font-weight:500}
+#tip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+
+@media (max-width:820px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi:nth-child(3){padding-left:0;border-left:0}
+  .kpi:nth-child(n+3){border-top:1px solid var(--rule);margin-top:6px}
+  .summary{grid-template-columns:1fr;gap:12px}
+  .grid2,.limits{grid-template-columns:1fr}
+}
+@media (max-width:480px){ body{padding-inline:16px} .panel{padding:16px 12px 10px} }
+@media (prefers-reduced-motion:reduce){#tip{transition:none}}
+/* regional additions */
+.score{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+.score th{white-space:nowrap}
+.score td{padding:12px 8px;vertical-align:middle}
+.score th{padding-inline:8px}
+.score td.reg{font-weight:600;white-space:nowrap}
+.score td.reg small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.score tr.ref td{background:var(--band)}
+.bar-cell{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.score td .num{white-space:nowrap}
+.bar-cell i{display:block;height:10px;border-radius:0 4px 4px 0;background:var(--wet);opacity:.85}
+.bar-cell i.var{background:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--f-mono);font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.pill.sig{background:var(--accent);color:var(--panel)}
+.pill.ns{background:var(--chip);color:var(--ink-2)}
+.pill.border{background:transparent;color:var(--ink-2);border:1px dashed var(--muted)}
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.mini .panel{padding:14px 14px 8px}
+.mini .ph{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mini .ph b{font-size:14px}
+.callout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.callout .panel{display:grid;gap:6px;align-content:start}
+.callout .big{font-family:var(--f-display);font-weight:700;font-size:28px;line-height:1.1}
+.callout p{font-size:14.5px;color:var(--ink-2)}
+@media (max-width:820px){.callout{grid-template-columns:1fr}}
+.mapnote{font-size:13px;color:var(--muted)}
+</style>
+<style id="formatting">
+/* Formatting: ink, white and grey with one vermilion origin line. Chart data colours are defined separately and unchanged. */
+:root{
+  --bg:#ffffff; --panel:#f6f5f2; --ink:#1a1a1a; --ink-2:#4a4a4a; --muted:#6b6b6b; --rule:#e6e4df; --grid:#ecebe7;
+  --accent:#1a1a1a; --band:#efeeea; --chip:#e6e4df; --origin:#d13b1f;
+  --f-display:"Noto Sans JP",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Noto Sans JP",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"Noto Sans JP",ui-sans-serif,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1a1a1a; --panel:#222221; --ink:#ffffff; --ink-2:#c9c8c4; --muted:#a3a29e; --rule:#34332f; --grid:#2b2a28;
+  --accent:#ffffff; --band:#262624; --chip:#2e2d2a; --origin:#ff7a5c}}
+:root[data-theme="dark"]{
+  --bg:#1a1a1a; --panel:#222221; --ink:#ffffff; --ink-2:#c9c8c4; --muted:#a3a29e; --rule:#34332f; --grid:#2b2a28;
+  --accent:#ffffff; --band:#262624; --chip:#2e2d2a; --origin:#ff7a5c}
+body{font-weight:400;font-feature-settings:"tnum" 1}
+.num,svg .tick text,.kpi .v,.big{font-variant-numeric:tabular-nums}
+/* Headings: Light, sentence case, ink */
+h1,h2,h3{letter-spacing:-.01em}
+.mast h1{font-weight:300;line-height:1.12;max-width:18ch}
+.mast h1 em{font-style:normal;color:var(--ink);font-weight:500}
+.f-head h2{font-weight:300}
+.limits h3,.who h3{font-weight:500}
+.panel-title,.summary b,.zone h3{font-weight:500}
+.kpi .v,.callout .big{font-weight:300}
+/* Labels: Medium, uppercase, tracked, grey */
+.eyebrow{color:var(--muted);font-weight:500;letter-spacing:.14em;font-size:11.5px}
+.eyebrow span+span{color:var(--muted)}
+.f-num,.summary h2,.note .k,th{color:var(--muted);font-weight:500;letter-spacing:.12em}
+.summary li::before{color:var(--muted);font-weight:500}
+/* The origin line: one per page, under the title, starting at the margin and running to the edge */
+.mast{position:relative;padding-top:64px;border-bottom:1px solid var(--rule)}
+/* Runs from the text margin to the right edge of the window, without widening the page */
+.mast::before{content:"";position:absolute;top:30px;left:0;right:calc((100% - 100vw) / 2);height:3px;background:var(--origin)}
+html{overflow-x:clip}
+.kpis{border-top:1px solid var(--ink)}
+/* Accents that were green become ink */
+.pill.sig{background:var(--ink);color:var(--bg)}
+.pill.border{border-color:var(--muted)}
+.conf.high{background:var(--ink);color:var(--bg)}
+.conf.med{border-color:var(--ink);color:var(--ink)}
+.next{border-left-color:var(--ink)}
+nav.toc a{background:var(--bg)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--ink)}
+a{color:var(--ink)!important;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+nav.toc a{text-decoration:none}
+summary:focus-visible,.tabs button:focus-visible{outline-color:var(--ink)}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.panel{border-color:var(--rule)}
+</style>
+<div id="tip" role="status" aria-live="polite"></div>
+<style>
+.conf{display:inline-flex;align-items:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.conf.high{background:var(--ink);color:var(--bg)}
+.conf.med{border:1.5px solid var(--ink);color:var(--ink)}
+.conf.low{background:var(--chip);color:var(--ink-2)}
+.kpi .conf{justify-self:start}
+.src{font-size:13px;color:var(--muted);white-space:nowrap}
+.src a{color:inherit}
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.chain .panel{display:grid;gap:10px;align-content:start;position:relative}
+.chain h3{font-size:19px;font-weight:500}
+.chain ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:15px;color:var(--ink-2)}
+.chain ul b{color:var(--ink);font-weight:600}
+.chain .panel:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:22px;font-size:18px;color:var(--muted)}
+.who{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.who .panel{display:grid;gap:10px;align-content:start}
+.who h3{font-size:19px;font-weight:500}
+.who ul{margin:0;padding-left:18px;display:grid;gap:7px;font-size:15px;color:var(--ink-2)}
+.who ul b{color:var(--ink);font-weight:600}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.projects .panel{display:grid;gap:8px;align-content:start}
+.projects h3{font-size:18px;font-weight:600}
+.projects p{font-size:14.5px;color:var(--ink-2);margin:0}
+.projects .links{display:flex;gap:14px;font-size:14px;flex-wrap:wrap}
+.cal{width:100%;border-collapse:separate;border-spacing:3px;font-size:12px;min-width:720px}
+.cal th{font-family:var(--f-mono);font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 0}
+.cal td.lab{font-size:13.5px;color:var(--ink);padding-right:10px;white-space:nowrap;text-align:left}
+.cal td.lab span{display:block;font-size:11.5px;color:var(--muted)}
+.cal td.c{height:38px;border-radius:5px;text-align:center;font-variant-numeric:tabular-nums;cursor:default}
+.tbl td{vertical-align:top}
+.tbl td:first-child{font-weight:600;min-width:200px}
+.tbl td.ev{color:var(--ink-2);font-size:14px}
+@media (max-width:900px){.chain{grid-template-columns:repeat(2,minmax(0,1fr))}.chain .panel::after{display:none}}
+@media (max-width:820px){.who{grid-template-columns:1fr}}
+@media (max-width:560px){.chain{grid-template-columns:1fr}}
+@media (max-width:480px){.note{grid-template-columns:1fr;gap:4px}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow"><span>Synthesis · Agriculture</span><span>Five analyses</span><span>Uganda, 1990–2026</span></div>
+  <h1>Uganda's farming runs on rain: <em>what five analyses show</em></h1>
+  <p class="dek">Five pieces of work, one connected story. Rainfall sets the harvest, the harvest sets prices, prices and surpluses drive trade with Uganda's neighbours, and irrigation and coffee show where that dependence can be reduced or turned into income. This page draws out what holds across all five, what decision-makers can use, and where Uganda's agricultural data falls short.</p>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><div class="v num">~30<small>%</small></div><div class="l">Yearly swing in real maize prices from harvest to lean season, the largest and most predictable price risk</div><span class="conf high">High confidence</span></div>
+  <div class="kpi"><div class="v num">~20<small>%</small></div><div class="l">Less forecast error for the October–December rains in Central and the Lake Victoria basin, using the Indian Ocean in July–August</div><span class="conf med">Medium confidence</span></div>
+  <div class="kpi"><div class="v num">29</div><div class="l">Districts with high irrigation need and water within reach; 34 more need water but lack easy sources</div><span class="conf med">Medium confidence</span></div>
+  <div class="kpi"><div class="v num">2<small>%</small></div><div class="l">Of the staples Uganda reports sending to Kenya since 2020 that Kenya records receiving</div><span class="conf high">High confidence</span></div>
+</div>
+
+<div class="summary">
+  <h2>What holds across all five</h2>
+  <ol>
+    <li><span><b>The second rains are the swing season, and the forecastable one.</b> October–December rainfall varies more than March–May, follows the Indian Ocean Dipole, and can be anticipated from July–August. It also feeds the December–February maize exports. <span class="conf med">Medium</span> <span class="src">· <a href="https://tayeruta.github.io/uganda-rainfall-analysis/reports/synthesis_report.html">Rainfall</a>, <a href="https://tayeruta.github.io/uganda-food-trade/reports/trade_report.html">Trade</a></span></span></li>
+    <li><span><b>Rain reaches prices through the harvest.</b> A dry first season raises maize prices about 9–11% in September–December, and less green crops are followed by higher prices. <span class="conf med">Medium</span> <span class="src">· <a href="https://tayeruta.github.io/uganda-food-prices/reports/food_prices_report.html">Food prices</a></span></span></li>
+    <li><span><b>The seasonal price cycle dwarfs weather shocks.</b> Maize swings about 30% every year between harvest and lean season, so storing grain earns about 25–30% in real terms on average. <span class="conf high">High</span> <span class="src">· <a href="https://tayeruta.github.io/uganda-food-prices/reports/food_prices_report.html">Food prices</a></span></span></li>
+    <li><span><b>Uganda's maize market is regional.</b> Prices move almost in step with Kenya's and Rwanda's, and gaps halve within two months. Border shocks disrupted trade flows but did not depress Ugandan prices. <span class="conf high">High</span> <span class="src">· <a href="https://tayeruta.github.io/uganda-food-trade/reports/trade_report.html">Trade</a></span></span></li>
+    <li><span><b>Karamoja is the outlier on every measure:</b> the driest and most volatile rainfall, the highest dry-spell risk, the biggest seasonal price swings, and water that is hardest to reach, even as its short rains get wetter. <span class="conf high">High</span> <span class="src">· all five</span></span></li>
+    <li><span><b>Coffee shows what happens when farmers are tied to a world market:</b> two-thirds of a world price change reaches robusta farmers within the month, and farmers now get 70–80% of the world robusta price. <span class="conf high">High</span> <span class="src">· <a href="https://tayeruta.github.io/uganda-coffee/reports/coffee_report.html">Coffee</a></span></span></li>
+    <li><span><b>The weakest link is the data.</b> Official crop statistics cannot detect droughts, trade records disagree by orders of magnitude, and coffee exports differ by 22–25% between sources. <span class="conf high">High</span> <span class="src">· all five</span></span></li>
+  </ol>
+</div>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#year">The farm year</a><a href="#chain">The chain</a><a href="#second">The second season</a><a href="#karamoja">Karamoja</a><a href="#coffee">Coffee</a><a href="#data">The data gap</a><a href="#meaning">What it means</a><a href="#projects">The projects</a>
+</nav>
+
+<section class="f" id="year">
+  <div class="f-head">
+    <div class="f-num">01 · The farm year</div>
+    <h2>One calendar, five analyses</h2>
+    <p>Average monthly patterns from each project, on one calendar. Rain falls in two seasons in the south and one long season in the north; harvests follow; maize is cheapest after the harvests and dearest in the lean months; exports follow the harvests.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-top"><div><div class="panel-title">The Ugandan farm year</div><div class="panel-sub">Darker means more · hover a cell for the value and source</div></div></div>
+    <div class="scroll"><table class="cal" id="t-cal"><thead></thead><tbody></tbody></table></div>
+  </div>
+  <div class="note"><span class="k">Reading</span><span>Maize is dearest from April to July, when the first-season crop is still in the field, about 14% above its yearly average in June, and cheapest from October to January. Maize to Kenya peaks in December–February, after the second harvest, and is lowest in April–July, when Uganda's own prices are high. Robusta coffee earns most in June–August, arabica in February–May.</span></div>
+</section>
+
+<section class="f" id="chain">
+  <div class="f-head">
+    <div class="f-num">02 · The chain</div>
+    <h2>From rain to harvest to price to trade</h2>
+    <p>Each link in the chain was tested separately, with the confidence shown in each project.</p>
+  </div>
+  <div class="chain">
+    <div class="panel"><span class="tag wet"><i></i>Rain</span><h3>Two seasons, one forecastable</h3><ul>
+      <li><b>No national trend since 1990</b>, but Karamoja and the East are getting wetter, through the short rains.</li>
+      <li><b>Bad seasons are nationwide:</b> regions rarely offset each other.</li>
+      <li>The two seasons are independent: a poor March–May says little about October–December.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-rainfall-analysis/reports/synthesis_report.html">Rainfall analysis →</a></div>
+    <div class="panel"><span class="tag wet"><i></i>Crops</span><h3>Dry spells hurt the North and East</h3><ul>
+      <li><b>Crop greenness follows rain with a two-to-three-month lag</b> and picks up the droughts of 2005, 2008–09, 2016–17 and 2021–22.</li>
+      <li>A two-week dry spell cuts peak greenness by about half a typical year's swing in the North and East, not in the South and West.</li>
+      <li>Dry-spell risk has not clearly risen since 1991.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-irrigation/reports/irrigation_report.html">Irrigation →</a></div>
+    <div class="panel"><span class="tag dry"><i></i>Prices</span><h3>The season sets the price</h3><ul>
+      <li><b>Maize swings about 30% a year</b> between harvest and lean season; up to 44% for sorghum in Karamoja.</li>
+      <li>A dry first season raises maize prices 9–11% later in the year.</li>
+      <li>Beans don't respond to Ugandan rainfall.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-food-prices/reports/food_prices_report.html">Food prices →</a></div>
+    <div class="panel"><span class="tag dry"><i></i>Trade</span><h3>A regional market</h3><ul>
+      <li><b>About 490,000 tonnes of staples a year</b> go to Kenya, South Sudan and Rwanda.</li>
+      <li>Prices are tied to neighbours': gaps halve within two months.</li>
+      <li>Kenya's 2021 ban stopped formal trade for most of a year, but prices held.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-food-trade/reports/trade_report.html">Food trade →</a></div>
+  </div>
+</section>
+
+<section class="f" id="second">
+  <div class="f-head">
+    <div class="f-num">03 · The second season</div>
+    <h2>The swing season is also the one that can be seen coming</h2>
+    <p>Three projects point at the same months.</p>
+  </div>
+  <div class="panel">
+    <div class="scroll"><table class="score tbl" style="min-width:720px"><thead><tr><th>Finding</th><th>Evidence</th><th>Confidence</th></tr></thead><tbody>
+      <tr><td>October–December rain varies more than March–May</td><td class="ev">About 20% a year nationally against 13% for the long rains (rainfall synthesis)</td><td><span class="conf high">High</span></td></tr>
+      <tr><td>The Indian Ocean in July–August forecasts it</td><td class="ev">The July–August Dipole index, known by early September, cuts cross-validated forecast error by about 20% in Central and the Lake Victoria basin; nothing forecasts the long rains</td><td><span class="conf med">Medium</span></td></tr>
+      <tr><td>The same signal points to next year's lean-season prices</td><td class="ev">Each +1 °C in July–August is followed by maize prices about 24% lower the next February–May (food prices; not replicated in wholesale data)</td><td><span class="conf low">Suggestive</span></td></tr>
+      <tr><td>The second harvest feeds the main export window</td><td class="ev">44% of the year's maize to Kenya crosses in December–February (food trade)</td><td><span class="conf high">High</span></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="note"><span class="k">So</span><span>A September outlook for the short rains is, in effect, also an early read on the December–February export season and the following lean season's prices. That makes it useful to traders, storage operators and food-security planners, not only to farmers deciding what to plant.</span></div>
+</section>
+
+<section class="f" id="karamoja">
+  <div class="f-head">
+    <div class="f-num">04 · Karamoja</div>
+    <h2>The outlier on every measure</h2>
+  </div>
+  <div class="panel">
+    <div class="scroll"><table class="score tbl" style="min-width:720px"><thead><tr><th>Lens</th><th>What Karamoja shows</th><th>Source</th></tr></thead><tbody>
+      <tr><td>Rainfall</td><td class="ev">The driest region (917 mm a year) and the most variable (annual swings about twice the national average), but getting significantly wetter: +6.7 mm a year, through the short rains</td><td class="src"><a href="https://tayeruta.github.io/uganda-rainfall-analysis/reports/regional_report.html">Rainfall</a></td></tr>
+      <tr><td>Dry spells</td><td class="ev">Moroto has a two-week dry spell in 73% of growing windows, Kaabong 66%, Karenga 57%; under 10% across most of the South and West</td><td class="src"><a href="https://tayeruta.github.io/uganda-irrigation/reports/irrigation_report.html">Irrigation</a></td></tr>
+      <tr><td>Prices</td><td class="ev">Sorghum, the staple, swings up to 44% in a year; prices move with the national market, and the 2022 spike came during national shortfalls while Karamoja's own crops were near normal</td><td class="src"><a href="https://tayeruta.github.io/uganda-food-prices/reports/food_prices_report.html">Food prices</a></td></tr>
+      <tr><td>Water</td><td class="ev">Little cropland near permanent water, and basement rock with low-yielding boreholes: high need, water hard to reach</td><td class="src"><a href="https://tayeruta.github.io/uganda-irrigation/reports/irrigation_report.html">Irrigation</a></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="note"><span class="k">So</span><span>Karamoja's food security is decided as much by national harvests and prices as by its own rain. Water harvesting, drought-tolerant crops and price-aware food assistance fit better than pump irrigation, and its wetting short rains may widen the window for a second crop. That last point is worth testing on the ground.</span></div>
+</section>
+
+<section class="f" id="coffee">
+  <div class="f-head">
+    <div class="f-num">05 · Coffee</div>
+    <h2>The cash crop: a world price, a warming belt and a yield gap</h2>
+  </div>
+  <div class="who">
+    <div class="panel"><span class="tag wet"><i></i>Prices</span><h3>Farmers get the world price fast</h3><ul>
+      <li><b>Farmers' share of the world robusta price</b> rose from about 45% after liberalisation (1992–93) to 70–80% today.</li>
+      <li>About two-thirds of a world price change reaches robusta farmers within the month.</li>
+      <li>The 2024–25 farm-gate boom was almost entirely the world price.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-coffee/reports/coffee_report.html">Coffee report →</a></div>
+    <div class="panel"><span class="tag dry"><i></i>Climate</span><h3>Heat costs exports</h3><ul>
+      <li><b>Daytime highs in the robusta zones are rising 0.43–0.67 °C a decade</b> (reanalysis; needs a station check).</li>
+      <li>A hot January–June cuts robusta exports by about 9–16% per standard deviation; a wet July–December lifts the next crop.</li>
+      <li>Arabica shows no consistent signal.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-coffee/reports/coffee_report.html">Coffee report →</a></div>
+    <div class="panel"><span class="tag wet"><i></i>Benchmark</span><h3>Big, fast-growing, low-yield</h3><ul>
+      <li><b>6th-largest producer and exporter</b> in the world, and the fastest-growing of the top ten (5% a year).</li>
+      <li>Paid about 85% of the world reference for its mix, more than Vietnam.</li>
+      <li>Yield is perhaps a fifth of Vietnam's, but rests on imputed area.</li></ul>
+      <a class="src" href="https://tayeruta.github.io/uganda-coffee/reports/benchmark_report.html">Benchmark →</a></div>
+  </div>
+</section>
+
+<section class="f" id="data">
+  <div class="f-head">
+    <div class="f-num">06 · The data gap</div>
+    <h2>Where Uganda's agricultural numbers fall short</h2>
+    <p>Every project ran into data problems. Together they show where better statistics would change decisions most.</p>
+  </div>
+  <div class="panel">
+    <div class="scroll"><table class="score tbl" style="min-width:760px"><thead><tr><th>Problem</th><th>What was found</th><th>Project</th></tr></thead><tbody>
+      <tr><td>Crop production statistics</td><td class="ev">FAOSTAT's Uganda series has a 2008 method break (crops moved −88% to +110% in a year), harvested area frozen in 2013–15 and implausible jumps in 2018–19; only sorghum tracks rainfall</td><td class="src">Food prices</td></tr>
+      <tr><td>Food trade records</td><td class="ev">Kenya records 2% of the staples Uganda reports sending since 2020; Rwanda records two to five times more than Uganda reports; border monitors count more than either</td><td class="src">Food trade</td></tr>
+      <tr><td>Border monitoring</td><td class="ev">FEWS NET's South Sudan tonnages are implausible (likely bags entered as tonnes), and its monitoring stops in September 2024</td><td class="src">Food trade</td></tr>
+      <tr><td>Coffee exports</td><td class="ev">USDA matched the Coffee Department until 2021, then fell 22–25% below it</td><td class="src">Coffee benchmark</td></tr>
+      <tr><td>Coffee yield</td><td class="ev">Harvested area is imputed every year, so the yield gap with Vietnam cannot be sized with confidence</td><td class="src">Coffee benchmark</td></tr>
+      <tr><td>Coffee farm-gate prices</td><td class="ev">Not published for late 2015–2019; monthly reports contained 14 typing slips in 80 months</td><td class="src">Coffee</td></tr>
+      <tr><td>Cropland maps</td><td class="ev">Satellite cropland maps miss most banana and coffee gardens, so cropland is undercounted in the South and West</td><td class="src">Irrigation</td></tr>
+      <tr><td>Irrigation programme</td><td class="ev">No public district-level data on the government's micro-scale irrigation programme; FAO's irrigation map dates from about 2005</td><td class="src">Irrigation</td></tr>
+      <tr><td>Weather stations</td><td class="ev">Warming trends in the coffee zones rest on reanalysis and have not yet been checked against weather-station records</td><td class="src">Coffee</td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<section class="f" id="meaning">
+  <div class="f-head"><div class="f-num">07 · What it means</div><h2>Who can use this, and how</h2></div>
+  <div class="who">
+    <div class="panel"><span class="tag wet"><i></i>Farmers, traders and lenders</span><h3>Plan around the season</h3><ul>
+      <li><b>Storage pays:</b> about 25–30% in real terms from harvest to lean season, before losses.</li>
+      <li>A September short-rains outlook is an early read on export demand and lean-season prices.</li>
+      <li>Coffee farmers now track the world price closely, so price risk management matters more than ever.</li></ul></div>
+    <div class="panel"><span class="tag dry"><i></i>Government and partners</span><h3>Target by place</h3><ul>
+      <li><b>Pump irrigation fits 29 districts</b>, mostly in the East and around Lake Kyoga.</li>
+      <li>Karamoja needs water harvesting, drought-tolerant crops and price-aware assistance.</li>
+      <li>Predictable trade rules matter: a ban lifted in days still stopped formal maize trade for most of a year.</li></ul></div>
+    <div class="panel"><span class="tag dry"><i></i>Statisticians</span><h3>Fix the foundations</h3><ul>
+      <li><b>Reconcile trade records</b> with Kenya and Rwanda.</li>
+      <li>Measure crop area and yield directly, starting with coffee and maize.</li>
+      <li>Publish district data for public irrigation and input programmes.</li></ul></div>
+  </div>
+</section>
+
+<section class="f" id="projects">
+  <div class="f-head"><div class="f-num">08 · The projects</div><h2>Read the full analyses</h2>
+    <p>Each project has its own report, notebooks and code, built from public data and reproducible from scratch.</p></div>
+  <div class="projects">
+    <div class="panel"><span class="tag wet"><i></i>Climate</span><h3>Rainfall</h3><p>National, regional and Indian Ocean Dipole analysis of Uganda's rainfall, 1990–2025.</p><div class="links"><a href="https://tayeruta.github.io/uganda-rainfall-analysis/reports/synthesis_report.html">Report</a><a href="https://github.com/TayeRuta/uganda-rainfall-analysis">Code and data</a></div></div>
+    <div class="panel"><span class="tag dry"><i></i>Markets</span><h3>Food prices</h3><p>Rainfall shocks, the Indian Ocean and satellite crop greenness against WFP market prices, 2006–2026.</p><div class="links"><a href="https://tayeruta.github.io/uganda-food-prices/reports/food_prices_report.html">Report</a><a href="https://github.com/TayeRuta/uganda-food-prices">Code and data</a></div></div>
+    <div class="panel"><span class="tag wet"><i></i>Cash crop</span><h3>Coffee</h3><p>Exports, world-price pass-through to farmers, climate exposure, and a benchmark against 21 producers.</p><div class="links"><a href="https://tayeruta.github.io/uganda-coffee/reports/coffee_report.html">Report</a><a href="https://tayeruta.github.io/uganda-coffee/reports/benchmark_report.html">Benchmark</a><a href="https://github.com/TayeRuta/uganda-coffee">Code and data</a></div></div>
+    <div class="panel"><span class="tag wet"><i></i>Water</span><h3>Irrigation</h3><p>Where irrigation is needed across 135 districts, and where water is within reach.</p><div class="links"><a href="https://tayeruta.github.io/uganda-irrigation/reports/irrigation_report.html">Report</a><a href="https://github.com/TayeRuta/uganda-irrigation">Code and data</a></div></div>
+    <div class="panel"><span class="tag dry"><i></i>Trade</span><h3>Food trade</h3><p>Staple food trade with six neighbours: where it goes, why the sources disagree, and how prices are linked.</p><div class="links"><a href="https://tayeruta.github.io/uganda-food-trade/reports/trade_report.html">Report</a><a href="https://github.com/TayeRuta/uganda-food-trade">Code and data</a></div></div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Confidence.</b> Labels follow each project: <i>high</i> where results hold across methods and data sources, <i>medium</i> where they rest on one source or a modest sample, <i>suggestive</i> where a result is statistically significant but not replicated.</p>
+  <p><b>Sources.</b> CHIRPS rainfall; NOAA Indian Ocean Dipole and ENSO indices; ERA5-Land and TerraClimate; MODIS NDVI; WFP market prices; FAOSTAT; UN Comtrade; FEWS NET cross-border trade; Coffee Department (MAAIF); USDA; IMF world prices; British Geological Survey groundwater maps; JRC, HydroSHEDS, ESA WorldCover, WorldPop. Full citations in each project.</p>
+  <p><b>Reproducibility.</b> The calendar on this page is built by <span class="num">scripts/build_synthesis_data.py</span> from tables published in the five project repositories.</p>
+</footer>
+</div>
+<script id="report-data" type="application/json">{"months":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"rows":[{"key":"rain_c","label":"Rain, Central (two seasons)","unit":"mm","kind":"rain","v":[50.11,51.41,123.86,172.11,139.07,59.86,54.22,94.97,116.33,139.77,131.9,80.84],"src":"Rainfall analysis","url":"https://tayeruta.github.io/uganda-rainfall-analysis/reports/regional_report.html"},{"key":"rain_n","label":"Rain, Northern (one long season)","unit":"mm","kind":"rain","v":[12.4,20.12,70.73,134.46,142.46,122.34,136.69,155.18,115.51,137.63,85.78,32.12],"src":"Rainfall analysis","url":"https://tayeruta.github.io/uganda-rainfall-analysis/reports/regional_report.html"},{"key":"maize_price","label":"Maize price vs yearly average","unit":"%","kind":"price","v":[-9.95,-6.33,-0.72,7.51,12.88,14.29,12.3,2.0,-3.76,-11.13,-8.59,-4.87],"src":"Food prices","url":"https://tayeruta.github.io/uganda-food-prices/reports/food_prices_report.html"},{"key":"maize_kenya","label":"Maize to Kenya, share of year","unit":"%","kind":"flow","v":[17.92,13.06,8.14,3.99,7.06,3.57,3.81,6.2,7.39,7.89,8.03,12.94],"src":"Food trade","url":"https://tayeruta.github.io/uganda-food-trade/reports/trade_report.html"},{"key":"robusta","label":"Robusta coffee exports, share of year","unit":"%","kind":"flow","v":[7.4,7.76,7.61,6.86,8.21,10.89,11.51,11.23,9.7,7.85,7.12,6.78],"src":"Coffee","url":"https://tayeruta.github.io/uganda-coffee/reports/coffee_report.html"},{"key":"arabica","label":"Arabica coffee exports, share of year","unit":"%","kind":"flow","v":[8.59,9.91,11.51,12.11,10.52,8.27,6.76,6.38,4.29,6.17,9.05,8.18],"src":"Coffee","url":"https://tayeruta.github.io/uganda-coffee/reports/coffee_report.html"}]}</script>
+<script>
+(function(){
+const D = JSON.parse(document.getElementById('report-data').textContent);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const tip = document.getElementById('tip');
+function showTip(html, ev){
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect(), pad = 14;
+  let x = ev.clientX + pad, y = ev.clientY + pad;
+  if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - pad;
+  if (y + r.height > innerHeight - 8) y = ev.clientY - r.height - pad;
+  tip.style.left = Math.max(8, x) + 'px'; tip.style.top = Math.max(8, y) + 'px';
+}
+const hideTip = () => { tip.style.opacity = 0; };
+function hex(c){ const d = document.createElement('div'); d.style.color = c; document.body.appendChild(d); const v = getComputedStyle(d).color; d.remove(); return v.match(/\d+/g).map(Number); }
+function mix(a, b, t){ return `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(',')})`; }
+function lum(rgb){ const m = rgb.match(/\d+/g).map(Number); return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; }
+function draw(){
+  const base = hex(css('--band')), wet = hex(css('--wet')), dry = hex(css('--dry')), ink = hex(css('--ink-2'));
+  const t = document.getElementById('t-cal');
+  t.querySelector('thead').innerHTML = '<tr><th></th>' + D.months.map(m => `<th>${m}</th>`).join('') + '</tr>';
+  t.querySelector('tbody').innerHTML = D.rows.map(r => {
+    const cells = r.v.map((v, i) => {
+      let col;
+      if (r.kind === 'rain') col = mix(base, wet, Math.min(1, v / 175));
+      else if (r.kind === 'price') col = v >= 0 ? mix(base, dry, Math.min(1, v / 15)) : mix(base, wet, Math.min(1, -v / 15));
+      else col = mix(base, ink, Math.min(1, v / 18));
+      const fg = lum(col) < 0.5 ? '#f6f5f2' : '#1a1a1a';
+      const txt = r.kind === 'price' ? (v > 0 ? '+' : '') + Math.round(v) : Math.round(v);
+      return `<td class="c" style="background:${col};color:${fg}" data-r="${r.key}" data-i="${i}">${txt}</td>`;
+    }).join('');
+    return `<tr><td class="lab">${r.label}<span>${r.unit === 'mm' ? 'mm a month' : r.kind === 'price' ? '% above or below the yearly average' : '% of the year'}</span></td>${cells}</tr>`;
+  }).join('');
+  t.querySelectorAll('td.c').forEach(td => {
+    const r = D.rows.find(x => x.key === td.dataset.r), i = +td.dataset.i, v = r.v[i];
+    const val = r.unit === 'mm' ? Math.round(v) + ' mm' : (r.kind === 'price' && v > 0 ? '+' : '') + v.toFixed(1) + '%';
+    td.addEventListener('pointermove', ev => showTip(`<div class="t">${D.months[i]} · ${r.label}</div><div class="row"><span>Value</span><b>${val}</b></div><div class="row"><span>Source</span><b>${r.src}</b></div>`, ev));
+    td.addEventListener('pointerleave', hideTip);
+  });
+}
+draw();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+new MutationObserver(draw).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+})();
+</script>
+
+</body></html>
