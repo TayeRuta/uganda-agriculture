@@ -24,6 +24,10 @@ A synthesis of five public-data analyses of Uganda's agriculture: rainfall, food
 | Irrigation: need and water access across 135 districts | [Report](https://tayeruta.github.io/uganda-irrigation/reports/irrigation_report.html) | [uganda-irrigation](https://github.com/TayeRuta/uganda-irrigation) |
 | Food trade: staple trade with six neighbours, source gaps and price links | [Report](https://tayeruta.github.io/uganda-food-trade/reports/trade_report.html) | [uganda-food-trade](https://github.com/TayeRuta/uganda-food-trade) |
 
+## Other sectors
+
+- [Uganda tourism](https://github.com/TayeRuta/uganda-tourism): who comes, when, and what goes unsold ([report](https://tayeruta.github.io/uganda-tourism/reports/tourism_report.html))
+
 ## Rebuilding the page
 
 The "farm year" calendar on the page is built from small tables published in the five project repositories:
