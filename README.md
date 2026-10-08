@@ -27,6 +27,7 @@ A synthesis of five public-data analyses of Uganda's agriculture: rainfall, food
 ## Other sectors
 
 - [Uganda tourism](https://github.com/TayeRuta/uganda-tourism): who comes, when, and what goes unsold ([report](https://tayeruta.github.io/uganda-tourism/reports/tourism_report.html))
+- [Uganda hospitality](https://github.com/TayeRuta/uganda-hospitality): how full hotels are, how big the sector is, where the graded hotels are, and how reliable the statistics are ([report](https://tayeruta.github.io/uganda-hospitality/reports/hospitality_report.html))
 
 ## Rebuilding the page
 
